@@ -1,0 +1,64 @@
+[
+  {
+    "code":"invalid-key",
+    "msg":"Key `holder` has validation errors",
+    "data":{
+      "key":"holder",
+      "value":{
+        "name":"Princess",
+        "surname":"Carolyn",
+        "email":"pc@vim.com",
+        "phone":"12"
+      },
+      "errors":
+      [
+        {
+          "code":"invalid-key",
+          "msg":"Key `phone` has validation errors",
+          "data":{
+            "key":"phone",
+            "value":"12",
+            "errors":[
+              {
+                "code":"invalid-phone",
+                "msg":"The value must be a valid phone number",
+                "data":"12"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "code":"invalid-key",
+    "msg":"Key `rooms_paxes` has validation errors",
+    "data":{
+      "key":"rooms_paxes",
+      "value":[
+        true,
+        {"adults":1}
+      ],
+      "errors":[
+        {
+          "code":"invalid-item",
+          "msg":"The item at key `0` has validation errors",
+          "data":{
+            "key":0,
+            "value":true,
+            "errors":["type-error"]
+          }
+        },
+        {
+          "code":"invalid-item",
+          "msg":"The item at key `1` has validation errors",
+          "data":{
+            "key":1,
+            "value":{"adults":1},
+            "errors":["no-children-specified"]
+          }
+        }
+      ]
+    }
+  }
+]

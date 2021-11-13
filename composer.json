@@ -1,0 +1,19 @@
+{
+    "name": "drakuno/validators",
+    "description": "Is this the validation library you need? Yeeess!",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Drakuno\\Validators\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Drakuno",
+            "email": "wolfdrakuno@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
