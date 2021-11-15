@@ -6,14 +6,12 @@ class HasKeyValidator extends AbstractConditionValidator
 {
   use CustomErrorsMakerTrait;
 
-  private $key;
-
   public function __construct(
-    string $key,
+    private string $key,
+    private bool $present_is_valid=true,
     ?callable $errors_maker=null
   )
   {
-    $this->key = $key;
     $this->setErrorsMaker($errors_maker?:[$this,"defaultErrorsMake"]);
   }
 
@@ -21,7 +19,7 @@ class HasKeyValidator extends AbstractConditionValidator
 
   public function test($value):bool
   {
-    return isset($value[$this->key]);
+    return (!$this->present_is_valid)^isset($value[$this->key]);
   }
 
   // }
@@ -32,10 +30,15 @@ class HasKeyValidator extends AbstractConditionValidator
     {
       return [
         new ValidationError(
-          "{$keyword}-missing",
-          sprintf("%s `%s` must be provided",
+          $this->present_is_valid
+            ?"{$keyword}-missing"
+            :"{$keyword}-present",
+          sprintf("%s `%s` must be %s",
             ucfirst($keyword),
-            $this->key
+            $this->key,
+            $this->present_is_valid
+              ?"provided"
+              :"omitted"
           ),
           $this->key
         )
@@ -47,8 +50,10 @@ class HasKeyValidator extends AbstractConditionValidator
   {
     return [
       new ValidationError(
-        "key-missing",
-        "Key `{$this->key}` must be provided",
+        $this->present_is_valid
+          ?"key-missing"
+          :"key-present",
+        "Key `{$this->key}` must be ".($this->present_is_valid?"provided":"omitted"),
         $this->key
       )
     ];
