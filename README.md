@@ -102,6 +102,14 @@ Constructor parameter `provide_items_as_tuples` specifies if the child validator
 
 By default, a single error is returned for each failing item, but this behavior can be modified with constructor parameter `callable errors_maker`.
 
+### `ArraySomeItemsValidator`
+
+Validates that a certain threshold of an array's items pass validation.
+
+Very similar to `ArrayItemsValidator`, and also includes parameters to specify minimum and maximum number of items that must pass validation.
+
+By default, all item errors are grouped under a single error which states on which end the threshold failed.
+
 ### `KeyValidator` and `PropertyValidator`
 
 Validate the key or property of a value, respectively, using a child validator.
