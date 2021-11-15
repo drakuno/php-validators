@@ -42,4 +42,22 @@ class CustomErrorsMakerTraitTest extends TestCase
 
     $this->assertEquals($mock_validator->errorsMake("asdfas"),["bop"]);
   }
+
+  public function testAssignsStaticClosures()
+  {
+    $inst = new class
+    {
+      use V\CustomErrorsMakerTrait;
+      public function __construct()
+      {
+        $this->setErrorsMaker([self::class,"defaultErrorsMake"]);
+      }
+
+      public function defaultErrorsMake($value):array
+      {
+        return ["meow-error"];
+      }
+    };
+    $this->assertNotEmpty($inst->getErrorsMaker());
+  }
 }

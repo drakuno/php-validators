@@ -11,8 +11,11 @@ trait CustomErrorsMakerTrait
   public function getErrorsMaker():callable { return $this->errors_maker; }
   public function setErrorsMaker(callable $errors_maker)
   {
-    $this->errors_maker =
-      Closure::fromCallable($errors_maker)->bindTo($this,$this);
+    $this->errors_maker = Closure::fromCallable($errors_maker);
+
+    $bound = @$this->errors_maker->bindTo($this,$this);
+    if (!is_null($bound))
+      $this->errors_maker = $bound;
   }
 
   public function errorsMake(...$args):array
