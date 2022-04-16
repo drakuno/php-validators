@@ -4,9 +4,9 @@ namespace Drakuno\Validators;
 
 class KeyValidator extends ChildValidator
 {
-  private $allow_default;
-  private $default;
-  private $key;
+  protected $allow_default;
+  protected $default;
+  protected $key;
 
   public function __construct(
     string $key,
@@ -24,7 +24,7 @@ class KeyValidator extends ChildValidator
     parent::__construct($accessor,$validator,$errors_maker);
   }
 
-  public function defaultErrorsMake($value,$child,array $child_errors):array
+  public function defaultErrorsMake($value,$key_value,array $child_errors):array
   {
     return [
       new ValidationError(
@@ -32,10 +32,11 @@ class KeyValidator extends ChildValidator
         "Key `{$this->key}` has validation errors",
         [
           'key'=>$this->key,
-          'value'=>$child,
+          'value'=>$key_value,
           'errors'=>$child_errors
         ]
       )
     ];
   }
 }
+

@@ -4,12 +4,12 @@ namespace Drakuno\Validators;
 
 class PropertyValidator extends ChildValidator
 {
-  private $allow_default;
-  private $default;
-  private $prop;
+  protected $allow_default;
+  protected $default;
+  protected $property;
 
   public function __construct(
-    string $prop,
+    string $property,
     callable $validator,
     $default=null,
     $allow_default=true,
@@ -18,24 +18,25 @@ class PropertyValidator extends ChildValidator
   {
     $this->allow_default = $allow_default;
     $this->default       = $default;
-    $this->prop          = $prop;
+    $this->property      = $property;
 
-    $accessor = ChildValidator::propertyAccessorMake($prop,$default,$allow_default);
+    $accessor = ChildValidator::propertyAccessorMake($property,$default,$allow_default);
     parent::__construct($accessor,$validator,$errors_maker);
   }
 
-  public function defaultErrorsMake($value,$child,array $child_errors):array
+  public function defaultErrorsMake($value,$property_value,array $child_errors):array
   {
     return [
       new ValidationError(
         "invalid-property",
-        "Property `{$this->prop}` has validation errors",
+        "Property `{$this->property}` has validation errors",
         [
-          'property'=>$this->prop,
-          'value'=>$child,
+          'property'=>$this->property,
+          'value'=>$property_value,
           'errors'=>$child_errors
         ]
       )
     ];
   }
 }
+
