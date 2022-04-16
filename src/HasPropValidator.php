@@ -7,8 +7,8 @@ class HasPropValidator extends AbstractConditionValidator
   use CustomErrorsMakerTrait;
 
   public function __construct(
-    private string $prop,
-    private bool $present_is_valid=true,
+    protected string $property,
+    protected bool $negated=false,
     ?callable $errors_maker=null
   )
   {
@@ -19,7 +19,7 @@ class HasPropValidator extends AbstractConditionValidator
 
   public function test($value):bool
   {
-    return (!$this->present_is_valid)^isset($value->{$this->prop});
+    return ($this->negated)^isset($value->{$this->property});
   }
 
   // }
@@ -30,17 +30,17 @@ class HasPropValidator extends AbstractConditionValidator
     {
       return [
         new ValidationError(
-          $this->present_is_valid
+          $this->negated
             ?"{$keyword}-missing"
             :"{$keyword}-present",
           sprintf("%s `%s` must be %s",
             ucfirst($keyword),
-            $this->prop,
-            $this->present_is_valid
+            $this->property,
+            $this->negated
               ?"provided"
               :"omitted"
           ),
-          $this->prop
+          $this->property
         )
       ];
     };
@@ -50,11 +50,11 @@ class HasPropValidator extends AbstractConditionValidator
   {
     return [
       new ValidationError(
-        $this->present_is_valid
+        $this->negated
           ?"property-missing"
           :"property-present",
-        "Property `{$this->prop}` must be ".($this->present_is_valid?"defined":"omitted"),
-        $this->prop
+        "Property `{$this->property}` must be ".($this->negated?"defined":"omitted"),
+        $this->property
       )
     ];
   }

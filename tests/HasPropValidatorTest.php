@@ -16,16 +16,16 @@ class HasPropValidatorTest extends TestCase
     $this->assertNotEmpty($validator(new stdClass));
   }
 
-  public function testPresentIsValidParameter():void
+  public function testNegated():void
   {
-    $validator = new HasPropValidator("sound",true);
+    $validator = new HasPropValidator("sound",false);
     $value     = (object)[
       'sound'=>"meow",
       'family'=>"felidae",
     ];
     $this->assertEmpty($validator($value));
 
-    $validator = new HasPropValidator("sound",false);
+    $validator = new HasPropValidator("sound",true);
     $this->assertNotEmpty($validator($value));
   }
 }

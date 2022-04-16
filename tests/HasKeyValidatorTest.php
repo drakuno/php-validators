@@ -16,16 +16,16 @@ class HasKeyValidatorTest extends TestCase
     $this->assertNotEmpty($validator([]));
   }
 
-  public function testPresentIsValidParameter():void
+  public function testNegated():void
   {
-    $validator = new HasKeyValidator("sound",true);
+    $validator = new HasKeyValidator("sound",false);
     $value     = [
       'sound'=>"meow",
       'family'=>"felidae",
     ];
     $this->assertEmpty($validator($value));
 
-    $validator = new HasKeyValidator("sound",false);
+    $validator = new HasKeyValidator("sound",true);
     $this->assertNotEmpty($validator($value));
   }
 }
