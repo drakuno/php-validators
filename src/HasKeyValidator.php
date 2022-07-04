@@ -26,13 +26,13 @@ class HasKeyValidator extends AbstractConditionValidator
 
   static public function errorsMakerMake(string $keyword):callable
   {
-    return function($value) use ($keyword)
+    return function() use ($keyword)
     {
       return [
         new ValidationError(
           $this->negated
-            ?"{$keyword}-missing"
-            :"{$keyword}-present",
+            ?"{$keyword}-present"
+            :"{$keyword}-missing",
           sprintf("%s `%s` must be %s",
             ucfirst($keyword),
             $this->key,
@@ -46,16 +46,17 @@ class HasKeyValidator extends AbstractConditionValidator
     };
   }
 
-  public function defaultErrorsMake($value):array
+  public function defaultErrorsMake():array
   {
     return [
       new ValidationError(
         $this->negated
-          ?"key-missing"
-          :"key-present",
+          ?"key-present"
+          :"key-missing",
         "Key `{$this->key}` must be ".($this->negated?"provided":"omitted"),
         $this->key
       )
     ];
   }
 }
+

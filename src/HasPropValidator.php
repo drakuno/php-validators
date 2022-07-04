@@ -26,13 +26,13 @@ class HasPropValidator extends AbstractConditionValidator
 
   static public function errorsMakerMake(string $keyword):callable
   {
-    return function($value) use ($keyword)
+    return function() use ($keyword)
     {
       return [
         new ValidationError(
           $this->negated
-            ?"{$keyword}-missing"
-            :"{$keyword}-present",
+            ?"{$keyword}-present"
+            :"{$keyword}-missing",
           sprintf("%s `%s` must be %s",
             ucfirst($keyword),
             $this->property,
@@ -46,16 +46,17 @@ class HasPropValidator extends AbstractConditionValidator
     };
   }
 
-  public function defaultErrorsMake($value):array
+  public function defaultErrorsMake():array
   {
     return [
       new ValidationError(
         $this->negated
-          ?"property-missing"
-          :"property-present",
+          ?"property-present"
+          :"property-missing",
         "Property `{$this->property}` must be ".($this->negated?"defined":"omitted"),
         $this->property
       )
     ];
   }
 }
+
