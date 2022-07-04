@@ -37,8 +37,8 @@ class HasPropValidator extends AbstractConditionValidator
             ucfirst($keyword),
             $this->property,
             $this->negated
-              ?"provided"
-              :"omitted"
+              ?"omitted"
+              :"provided"
           ),
           $this->property
         )
@@ -53,7 +53,7 @@ class HasPropValidator extends AbstractConditionValidator
         $this->negated
           ?"property-present"
           :"property-missing",
-        "Property `{$this->property}` must be ".($this->negated?"defined":"omitted"),
+        "Property `{$this->property}` must be ".($this->negated?"omitted":"defined"),
         $this->property
       )
     ];

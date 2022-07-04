@@ -37,8 +37,8 @@ class HasKeyValidator extends AbstractConditionValidator
             ucfirst($keyword),
             $this->key,
             $this->negated
-              ?"provided"
-              :"omitted"
+              ?"omitted"
+              :"provided"
           ),
           $this->key
         )
@@ -53,7 +53,7 @@ class HasKeyValidator extends AbstractConditionValidator
         $this->negated
           ?"key-present"
           :"key-missing",
-        "Key `{$this->key}` must be ".($this->negated?"provided":"omitted"),
+        "Key `{$this->key}` must be ".($this->negated?"omitted":"provided"),
         $this->key
       )
     ];
